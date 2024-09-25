@@ -7,8 +7,9 @@ using UnityEngine;
 // This work is licensed under CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 public class UIManager : MonoBehaviour
-{    
+{
 
+    public LevelManager levelmanager;
 
     // References to UI Panels
     public GameObject mainMenuUI;
@@ -17,7 +18,9 @@ public class UIManager : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject optionsMenuUI;
     public GameObject creditsMenuUI;
+    public GameObject LoadingScreenUI;
 
+    public Image LaodingBar;
 
     // Gameplay Specific UI Elements
     public Text LevelCount;
@@ -61,7 +64,14 @@ public class UIManager : MonoBehaviour
         DisableAllUIPanels();
         optionsMenuUI.SetActive(true);
     }
-
+    public IEnumerator LoadingBarProgress()
+    {
+        while(!levelmanager.sceneLoad.isDone)
+        {
+            LaodingBar.fillAmount = levelmanager.GetLoadingProgress();
+            yield return null;
+        }
+    }
 
     public void UICredits()
     {
@@ -69,6 +79,23 @@ public class UIManager : MonoBehaviour
         creditsMenuUI.SetActive(true);
     }
 
+    public void UILoadingScreen(GameObject targetUI)
+    {
+        DisableAllUIPanels();
+        LoadingScreenUI.SetActive(true);
+    }
+    public void DisableLoadScreen(GameObject targetUI)
+    {
+        DisableAllUIPanels();
+        if(targetUI == gamePlayUI)
+        {
+            gamePlayUI.SetActive(true);
+        }
+        else if(targetUI == mainMenuUI)
+        {
+            mainMenuUI.SetActive(true);
+        }
+    }
 
     public void DisableAllUIPanels()
     {
@@ -78,6 +105,7 @@ public class UIManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         optionsMenuUI.SetActive(false);
         creditsMenuUI.SetActive(false);
+        LoadingScreenUI.SetActive(false);
     }
 
     public void EnableAllUIPanels()
