@@ -30,8 +30,8 @@ public class UIManager : MonoBehaviour
     public CanvasGroup loadingScreenCanvasGroup;
     public Image loadingBar;
     public TextMeshProUGUI loadingText;
-    public float fadeTime = 30f;
-
+    public float fadeTime = 0.5f;
+    
     public void UpdateLevelCount(int count)
     {
         if (LevelCount != null)
@@ -80,8 +80,7 @@ public class UIManager : MonoBehaviour
     public void UILoadingScreen(GameObject targetUI)
     {
         StartCoroutine(LoadingUIFadeIN());
-        DisableAllUIPanels();
-        LoadingScreen.SetActive(true);
+        StartCoroutine(DelayedSwitchUIPanel(fadeTime, targetUI));
     }
     public void DisableLoadScreen(GameObject targetUI)
     {
@@ -174,6 +173,7 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         DisableAllUIPanels();
+        LoadingScreen.SetActive(true);
         uiPanel.SetActive(true);
     }
 

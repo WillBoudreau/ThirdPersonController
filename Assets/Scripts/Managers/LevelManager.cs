@@ -67,7 +67,6 @@ public class LevelManager : MonoBehaviour
         switch (sceneName)
         {
             case "MainMenu":
-                Debug.Log("Loading Main Menu");
                 _uIManager.UILoadingScreen(_uIManager.mainMenuUI);
                 _gameStateManager.SwitchToState(_gameStateManager.gameState_GameInit);
                 break;
@@ -111,6 +110,7 @@ public class LevelManager : MonoBehaviour
     private void OperationCompleted(AsyncOperation operation)
     {
         scenesToLoad.Remove(operation);
+        operation.completed -= OperationCompleted;
     }
 
 }
