@@ -1,9 +1,7 @@
-﻿using System;
-using UnityEditor.SearchService;
+﻿﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;
 
 // Sam Robichaud 
 // NSCC Truro 2024
