@@ -15,9 +15,8 @@ public class PlayerLocomotionHandler : MonoBehaviour
     [SerializeField] public bool isSprinting;
 
     [Header("Debug Output (read only)")]
-    [SerializeField] private float playerVelocity;
     [SerializeField] private bool playerIsGrounded;
-
+    public static float playerVelocity;
     [Header("Movement Speeds")]
     public float walkingSpeed = 2f;
     public float joggingSpeed = 4f;
