@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // Sam Robichaud 
 // NSCC Truro 2024
@@ -11,6 +12,9 @@ public class InputManager : MonoBehaviour
     // Script References
     [SerializeField] private PlayerLocomotionHandler playerLocomotionHandler;
     [SerializeField] private CameraManager cameraManager; // Reference to CameraManager
+    [SerializeField] private PlayerInputActions playerinputactions;
+    [SerializeField] private InputAction movement;
+    [SerializeField] private Rigidbody rb;
 
 
     [Header("Movement Inputs")]
@@ -26,35 +30,62 @@ public class InputManager : MonoBehaviour
 
     public bool isPauseKeyPressed = false;
 
-
+    private void Awake()
+    {
+        playerinputactions = new PlayerInputActions();
+    }
+    private void OnEnable()
+    {
+        movement = playerinputactions.Player.Move;
+        movement.Enable();
+        playerinputactions.Player.Jump.Enable();
+        movement.performed += HandleMovementInput;
+        playerinputactions.Player.Jump.performed += HandleJumpInput;
+    }
+    private void OnDisable()
+    {
+        movement.Disable();
+        playerinputactions.Player.Jump.Disable();
+    }
     public void HandleAllInputs()
     {
-        HandleMovementInput();
-        HandleSprintingInput();
-        HandleJumpInput();
-        HandleCameraInput();
-        HandlePauseKeyInput();
+        movement = playerinputactions.Player.Move;
+        movement.Enable();
+        playerinputactions.Player.Jump.Enable();
+        movement.performed += HandleMovementInput;
+        playerinputactions.Player.Jump.performed += HandleJumpInput;
+        //HandleSprintingInput();
+        // HandleCameraInput();
+        //HandlePauseKeyInput();
     }
 
     private void HandleCameraInput()
-    {        
-            // Get mouse input for the camera
-            cameraInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+    {
+        // Get mouse input for the camera
+        cameraInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-            // Get scroll input for camera zoom
-            scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        // Get scroll input for camera zoom
+        scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
-            // Send inputs to CameraManager
-            cameraManager.zoomInput = scrollInput;
-            cameraManager.cameraInput = cameraInput;        
+        // Send inputs to CameraManager
+        cameraManager.zoomInput = scrollInput;
+        cameraManager.cameraInput = cameraInput;
     }
 
-    private void HandleMovementInput()
+    private void HandleMovementInput(InputAction.CallbackContext context)
     {
-        movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        horizontalInput = movementInput.x;
-        verticalInput = movementInput.y;
-        moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
+        Debug.Log("Movement " + context.phase);
+        if (context.performed)
+        {
+            Debug.Log("Movement " + context.phase);
+            Vector2 inputVector = context.ReadValue<Vector2>();
+            Vector3 movementVector = new Vector3(inputVector.x, 0, inputVector.y);
+            transform.Translate(movementVector * 100f * Time.deltaTime);
+        }
+        //movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        //horizontalInput = movementInput.x;
+        //verticalInput = movementInput.y;
+        //moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
     }
 
     private void HandlePauseKeyInput()
@@ -74,17 +105,12 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void HandleJumpInput()
+    private void HandleJumpInput(InputAction.CallbackContext context)
     {
-        jumpInput = Input.GetKeyDown(KeyCode.Space); // Detect jump input (spacebar)
-        if (jumpInput)
+        Debug.Log("Jump" + context.phase);
+        if (context.performed)
         {
-            playerLocomotionHandler.HandleJump(); // Trigger jump in locomotion handler
+            rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
         }
     }
-
-
-
-
-
 }
