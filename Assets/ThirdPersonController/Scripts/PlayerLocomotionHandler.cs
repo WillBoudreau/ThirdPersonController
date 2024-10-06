@@ -16,7 +16,7 @@ public class PlayerLocomotionHandler : MonoBehaviour
 
     [Header("Debug Output (read only)")]
     [SerializeField] private bool playerIsGrounded;
-    public static float playerVelocity;
+    public float playerVelocity;
     [Header("Movement Speeds")]
     public float walkingSpeed = 2f;
     public float joggingSpeed = 4f;
@@ -27,12 +27,13 @@ public class PlayerLocomotionHandler : MonoBehaviour
 
     private Vector3 moveDirection;
     private Vector3 velocity;
-    private bool isJumping = false; // Track if player is currently jumping
+    public bool isJumping = false; // Track if player is currently jumping
  
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        HandleAllPlayerMovement();
     }
 
     public void HandleAllPlayerMovement()
@@ -44,13 +45,15 @@ public class PlayerLocomotionHandler : MonoBehaviour
 
     }
 
-    private void HandlePlayerMovement()
+    public void HandlePlayerMovement()
     {
-     
-        
-            // Normal movement calculation
-            moveDirection = cameraTransform.forward * inputManager.verticalInput;
-            moveDirection += cameraTransform.right * inputManager.horizontalInput;
+        moveDirection = Vector3.zero;
+        // Normal movement calculation
+        if(inputManager.movementInput.magnitude >= 0.1f)
+        {
+
+            moveDirection = cameraTransform.forward * inputManager.movementInput.y;
+            moveDirection += cameraTransform.right * inputManager.movementInput.x;
             moveDirection.Normalize();
             moveDirection.y = 0;
 
@@ -68,7 +71,8 @@ public class PlayerLocomotionHandler : MonoBehaviour
                 moveDirection *= walkingSpeed;
             }
 
-            // Apply gravity
+        
+        }
             if (characterController.isGrounded)
             {
                 isJumping = false;
@@ -77,6 +81,7 @@ public class PlayerLocomotionHandler : MonoBehaviour
                     velocity.y = -2f; // Small downward force to stay grounded
                 }
             }
+            // Apply gravity
             else
             {
                 velocity.y += gravity * Time.deltaTime; // Apply gravity when not grounded
@@ -84,7 +89,6 @@ public class PlayerLocomotionHandler : MonoBehaviour
 
             // Move the character controller
             characterController.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
-        
     }
 
     private void HandlePlayerRotation()
@@ -110,7 +114,7 @@ public class PlayerLocomotionHandler : MonoBehaviour
     public void HandleJump()
     {
         // Only jump if grounded
-        if (characterController.isGrounded)
+        if (characterController.isGrounded && !isJumping)
         {
             isJumping = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); // Apply jump force

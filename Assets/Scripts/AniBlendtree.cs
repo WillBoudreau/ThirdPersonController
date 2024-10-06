@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AniBlendtree : MonoBehaviour
 {
+    public PlayerLocomotionHandler playerLocomotionHandler;
     public GameObject player;
     public Animator anim;
 
@@ -15,6 +16,6 @@ public class AniBlendtree : MonoBehaviour
     }
     void Update()
     {
-        anim.SetFloat("Speed",PlayerLocomotionHandler.playerVelocity);
+        anim.SetFloat("Speed",playerLocomotionHandler.playerVelocity);
     }
 }
