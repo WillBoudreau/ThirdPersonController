@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.Interactions;
 
 // Sam Robichaud 
 // NSCC Truro 2024
@@ -20,6 +22,8 @@ public class InputManager : MonoBehaviour
     public float verticalInput;
     public float horizontalInput;
     // public bool jumpInput;
+    public PlayerInput playerInput;
+    private string currentControlScheme = "KeyboardMouse";
     public float moveAmount;
     public Vector2 movementInput;
     private InputAction movement;
@@ -34,46 +38,81 @@ public class InputManager : MonoBehaviour
     void Awake()
     {
         playerInputActions = new PlayerInputActions();
+        if(playerInput == null)
+        {
+            Debug.LogWarning("PlayerInput is not properly initialized");
+        }
         playerInputActions.Player.Move.performed += HandleMovementInput;
         playerInputActions.Player.Jump.performed += HandleJumpInput;
+        playerInputActions.SwitchControlScheme.SwitchScheme.performed += HandleSwitchScheme;
     }
     void OnEnable()
     {
-        // movement = playerInputActions.Player.Move;
-        // jump = playerInputActions.Player.Jump;
-        // movement.Enable();
-        // playerInputActions.Player.Jump.Enable();
-        // playerInputActions.Player.Jump.performed += HandleJumpInput;
-        // movement.performed += HandleMovementInput;
-        // movement.canceled += HandleMovementInput; 
-        // jump.performed += HandleJumpInput;
-        // jump.canceled += HandleJumpInput;
-        playerInputActions.Player.Move.Enable();
-        playerInputActions.Player.Jump.Enable();
-        playerInputActions.Player.Sprint.Enable();
-
+        playerInputActions.Enable();
         movement = playerInputActions.Player.Move;
         jump = playerInputActions.Player.Jump;
         movement.Enable();
         jump.Enable();
 
-        playerInputActions.Player.Move.performed += HandleMovementInput;
         playerInputActions.Player.Move.canceled += HandleMovementInput;
-        playerInputActions.Player.Jump.performed += HandleJumpInput;
         playerInputActions.Player.Jump.canceled += HandleJumpInput;
+
     }
 
     void OnDisable()
     {
-        playerInputActions.Player.Move.Disable();
-        playerInputActions.Player.Jump.Disable();
-        playerInputActions.Player.Sprint.Disable();
+       playerInputActions.Disable();
     }
     void Update()
     {
         playerLocomotionHandler.playerVelocity = moveAmount;
     }
+    void HandleSwitchScheme(InputAction.CallbackContext context)
+    {
+        Debug.Log("Switching Control Scheme");
+        if (context.performed)
+        {
+            if (currentControlScheme == "KeyboardMouse")
+            {
+                Debug.Log("KeyboardMouse connected");
+                if (Gamepad.current != null)
+                {
+                    Debug.Log("Gamepad connected");
+                    playerInputActions.Player.Disable();
 
+                    playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+                    currentControlScheme = "Gamepad";
+
+                    playerInputActions.Player.Enable();
+                    Debug.Log("Switched to Gamepad");
+
+                }
+                else
+                {
+                    Debug.LogWarning("No Gamepad connected");
+                }
+            }
+            else
+            {
+                Debug.Log("Gamepad connected");
+                if (Keyboard.current != null && Mouse.current != null)
+                {
+                    Debug.Log("Keyboard and Mouse connected");
+                    playerInputActions.Player.Disable();
+
+                    playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Mouse.current);
+                    currentControlScheme = "Keyboard&Mouse";
+
+                    playerInputActions.Player.Enable();
+                    Debug.Log("Switched to Keyboard&Mouse");
+                }
+                else
+                {
+                    Debug.LogWarning("No Keyboard or Mouse connected");
+                }
+            }
+        }
+    }
     public void HandleAllInputs()
     {
         HandleSprintingInput();

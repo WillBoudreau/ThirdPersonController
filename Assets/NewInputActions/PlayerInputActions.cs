@@ -833,6 +833,45 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SwitchControlScheme"",
+            ""id"": ""6581f93f-79ec-4278-ac4c-9ad423356a8f"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchScheme"",
+                    ""type"": ""Button"",
+                    ""id"": ""96d3a7ad-59c4-43f4-bb2b-ee7e8c674d74"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""aebde15d-bda6-49dc-b9ae-f65cacc18bb6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SwitchScheme"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4b49c85-a995-49c1-ad7f-72dff1d6ec10"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwitchScheme"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -917,6 +956,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // SwitchControlScheme
+        m_SwitchControlScheme = asset.FindActionMap("SwitchControlScheme", throwIfNotFound: true);
+        m_SwitchControlScheme_SwitchScheme = m_SwitchControlScheme.FindAction("SwitchScheme", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1170,6 +1212,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // SwitchControlScheme
+    private readonly InputActionMap m_SwitchControlScheme;
+    private List<ISwitchControlSchemeActions> m_SwitchControlSchemeActionsCallbackInterfaces = new List<ISwitchControlSchemeActions>();
+    private readonly InputAction m_SwitchControlScheme_SwitchScheme;
+    public struct SwitchControlSchemeActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public SwitchControlSchemeActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchScheme => m_Wrapper.m_SwitchControlScheme_SwitchScheme;
+        public InputActionMap Get() { return m_Wrapper.m_SwitchControlScheme; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SwitchControlSchemeActions set) { return set.Get(); }
+        public void AddCallbacks(ISwitchControlSchemeActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SwitchControlSchemeActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwitchControlSchemeActionsCallbackInterfaces.Add(instance);
+            @SwitchScheme.started += instance.OnSwitchScheme;
+            @SwitchScheme.performed += instance.OnSwitchScheme;
+            @SwitchScheme.canceled += instance.OnSwitchScheme;
+        }
+
+        private void UnregisterCallbacks(ISwitchControlSchemeActions instance)
+        {
+            @SwitchScheme.started -= instance.OnSwitchScheme;
+            @SwitchScheme.performed -= instance.OnSwitchScheme;
+            @SwitchScheme.canceled -= instance.OnSwitchScheme;
+        }
+
+        public void RemoveCallbacks(ISwitchControlSchemeActions instance)
+        {
+            if (m_Wrapper.m_SwitchControlSchemeActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ISwitchControlSchemeActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SwitchControlSchemeActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SwitchControlSchemeActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public SwitchControlSchemeActions @SwitchControlScheme => new SwitchControlSchemeActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1235,5 +1323,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface ISwitchControlSchemeActions
+    {
+        void OnSwitchScheme(InputAction.CallbackContext context);
     }
 }

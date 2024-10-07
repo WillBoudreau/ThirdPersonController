@@ -811,6 +811,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SwitchControlScheme",
+            "id": "6581f93f-79ec-4278-ac4c-9ad423356a8f",
+            "actions": [
+                {
+                    "name": "SwitchScheme",
+                    "type": "Button",
+                    "id": "96d3a7ad-59c4-43f4-bb2b-ee7e8c674d74",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aebde15d-bda6-49dc-b9ae-f65cacc18bb6",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchScheme",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4b49c85-a995-49c1-ad7f-72dff1d6ec10",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SwitchScheme",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
