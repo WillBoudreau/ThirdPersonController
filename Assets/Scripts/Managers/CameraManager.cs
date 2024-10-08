@@ -33,6 +33,8 @@ public class CameraManager : MonoBehaviour
     public float zoomInput;
 
     public bool isCameraMoveEnabled = true;
+    public float MouseX;
+    public float MouseY;
 
     // Initial camera rotation angles
     private float x = 0.0f;
@@ -65,7 +67,7 @@ public class CameraManager : MonoBehaviour
         if (followTarget == null) return; //set a debug error
 
         // Update the camera rotation and distance
-        UpdateCameraRotation();
+        UpdateCameraRotation(MouseX, MouseY);
         UpdateDistance();
 
         // Calculate the new camera rotation and position
@@ -78,13 +80,15 @@ public class CameraManager : MonoBehaviour
         playerCamera.transform.position = position;
     }
 
-    private void UpdateCameraRotation()
+    public void UpdateCameraRotation(float mouseX, float mouseY)
     {
+        MouseX = mouseX;
+        MouseY = mouseY;
         // Update the horizontal rotation based on mouse X movement
-        x += cameraInput.x * xSpeed * Time.deltaTime;
+        x += mouseX * xSpeed * Time.deltaTime;
 
         // Update the vertical rotation based on mouse Y movement
-        y -= cameraInput.y * ySpeed * Time.deltaTime;
+        y -= mouseY * ySpeed * Time.deltaTime;
 
         // Clamp the vertical rotation to the specified limits
         y = Mathf.Clamp(y, yMinLimit, yMaxLimit);

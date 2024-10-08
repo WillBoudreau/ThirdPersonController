@@ -28,10 +28,11 @@ public class InputManager : MonoBehaviour
     public Vector2 movementInput;
     private InputAction movement;
     private InputAction jump;
+    private InputAction look;
 
     [Header("Camera Inputs")]
-    public float scrollInput; // Scroll input for camera zoom
-    public Vector2 cameraInput; // Mouse input for the camera
+    public float scrollInput; 
+    public Vector2 cameraInput; 
 
     public bool isPauseKeyPressed = false;
 
@@ -45,17 +46,22 @@ public class InputManager : MonoBehaviour
         playerInputActions.Player.Move.performed += HandleMovementInput;
         playerInputActions.Player.Jump.performed += HandleJumpInput;
         playerInputActions.SwitchControlScheme.SwitchScheme.performed += HandleSwitchScheme;
+        playerInputActions.Player.Look.performed += HandleCameraInput;
     }
     void OnEnable()
     {
         playerInputActions.Enable();
         movement = playerInputActions.Player.Move;
         jump = playerInputActions.Player.Jump;
+        look = playerInputActions.Player.Look;
+       
         movement.Enable();
         jump.Enable();
+        look.Enable();
 
         playerInputActions.Player.Move.canceled += HandleMovementInput;
         playerInputActions.Player.Jump.canceled += HandleJumpInput;
+        playerInputActions.Player.Look.canceled += HandleCameraInput;
 
     }
 
@@ -80,7 +86,6 @@ public class InputManager : MonoBehaviour
                     Debug.Log("Gamepad connected");
                     playerInputActions.Player.Disable();
 
-                    playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
                     currentControlScheme = "Gamepad";
 
                     playerInputActions.Player.Enable();
@@ -115,24 +120,16 @@ public class InputManager : MonoBehaviour
     }
     public void HandleAllInputs()
     {
-        HandleSprintingInput();
+        //HandleSprintingInput();
         //HandleCameraInput();
         //HandlePauseKeyInput();
     }
 
-    // private void HandleCameraInput()
-    // {        
-    //         // Get mouse input for the camera
-    //         cameraInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-
-    //         // Get scroll input for camera zoom
-    //         scrollInput = Input.GetAxis("Mouse ScrollWheel");
-
-    //         // Send inputs to CameraManager
-    //         cameraManager.zoomInput = scrollInput;
-    //         cameraManager.cameraInput = cameraInput;        
-    // }
-
+    private void HandleCameraInput(InputAction.CallbackContext context)
+    {
+        cameraInput = context.ReadValue<Vector2>();
+        cameraManager.UpdateCameraRotation(cameraInput.x, cameraInput.y);
+    }
     private void HandleMovementInput(InputAction.CallbackContext context)
     {
         Debug.Log("Movement " + context.phase);
