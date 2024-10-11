@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Interactions;
+using UnityEngine.UI;
 
 // Sam Robichaud 
 // NSCC Truro 2024
@@ -23,7 +24,6 @@ public class InputManager : MonoBehaviour
     public float horizontalInput;
     // public bool jumpInput;
     public PlayerInput playerInput;
-    private string currentControlScheme = "KeyboardMouse";
     public float moveAmount;
     public Vector2 movementInput;
     private InputAction movement;
@@ -35,6 +35,10 @@ public class InputManager : MonoBehaviour
     public Vector2 cameraInput; 
 
     public bool isPauseKeyPressed = false;
+
+    [Header("Control Scheme")]
+    public Text textControlScheme1;
+    public Text textControlScheme2;
 
     void Awake()
     {
@@ -74,51 +78,6 @@ public class InputManager : MonoBehaviour
         playerLocomotionHandler.playerVelocity = moveAmount;
         CheckInputType();
     }
-    // void HandleSwitchScheme(InputAction.CallbackContext context)
-    // {
-    //     Debug.Log("Switching Control Scheme");
-    //     if (context.performed)
-    //     {
-    //         if (currentControlScheme == "KeyboardMouse")
-    //         {
-    //             Debug.Log("KeyboardMouse connected");
-    //             if (Gamepad.current != null)
-    //             {
-    //                 Debug.Log("Gamepad connected");
-    //                 playerInputActions.Player.Disable();
-
-    //                 currentControlScheme = "Gamepad";
-
-    //                 playerInputActions.Player.Enable();
-    //                 Debug.Log("Switched to Gamepad");
-
-    //             }
-    //             else
-    //             {
-    //                 Debug.LogWarning("No Gamepad connected");
-    //             }
-    //         }
-    //         else
-    //         {
-    //             Debug.Log("Gamepad connected");
-    //             if (Keyboard.current != null && Mouse.current != null)
-    //             {
-    //                 Debug.Log("Keyboard and Mouse connected");
-    //                 playerInputActions.Player.Disable();
-
-    //                 playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Mouse.current);
-    //                 currentControlScheme = "Keyboard&Mouse";
-
-    //                 playerInputActions.Player.Enable();
-    //                 Debug.Log("Switched to Keyboard&Mouse");
-    //             }
-    //             else
-    //             {
-    //                 Debug.LogWarning("No Keyboard or Mouse connected");
-    //             }
-    //         }
-    //     }
-    // }
     void CheckInputType()
     {
         foreach(InputDevice device in playerInput.devices)
@@ -126,10 +85,13 @@ public class InputManager : MonoBehaviour
             if(device is Keyboard|| device is Mouse)
             {
                 Debug.Log("Keyboard and Mouse");
+                textControlScheme1.text = "Keyboard and Mouse";
+
             }
             else if(device is Gamepad)
             {
                 Debug.Log("Gamepad");
+                textControlScheme2.text = "Gamepad";
             }
         }
     }
