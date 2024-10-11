@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour
         }
         playerInputActions.Player.Move.performed += HandleMovementInput;
         playerInputActions.Player.Jump.performed += HandleJumpInput;
-        playerInputActions.SwitchControlScheme.SwitchScheme.performed += HandleSwitchScheme;
+        // playerInputActions.SwitchControlScheme.SwitchScheme.performed += HandleSwitchScheme;
         playerInputActions.Player.Look.performed += HandleCameraInput;
     }
     void OnEnable()
@@ -72,54 +72,70 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         playerLocomotionHandler.playerVelocity = moveAmount;
+        CheckInputType();
     }
-    void HandleSwitchScheme(InputAction.CallbackContext context)
+    // void HandleSwitchScheme(InputAction.CallbackContext context)
+    // {
+    //     Debug.Log("Switching Control Scheme");
+    //     if (context.performed)
+    //     {
+    //         if (currentControlScheme == "KeyboardMouse")
+    //         {
+    //             Debug.Log("KeyboardMouse connected");
+    //             if (Gamepad.current != null)
+    //             {
+    //                 Debug.Log("Gamepad connected");
+    //                 playerInputActions.Player.Disable();
+
+    //                 currentControlScheme = "Gamepad";
+
+    //                 playerInputActions.Player.Enable();
+    //                 Debug.Log("Switched to Gamepad");
+
+    //             }
+    //             else
+    //             {
+    //                 Debug.LogWarning("No Gamepad connected");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             Debug.Log("Gamepad connected");
+    //             if (Keyboard.current != null && Mouse.current != null)
+    //             {
+    //                 Debug.Log("Keyboard and Mouse connected");
+    //                 playerInputActions.Player.Disable();
+
+    //                 playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Mouse.current);
+    //                 currentControlScheme = "Keyboard&Mouse";
+
+    //                 playerInputActions.Player.Enable();
+    //                 Debug.Log("Switched to Keyboard&Mouse");
+    //             }
+    //             else
+    //             {
+    //                 Debug.LogWarning("No Keyboard or Mouse connected");
+    //             }
+    //         }
+    //     }
+    // }
+    void CheckInputType()
     {
-        Debug.Log("Switching Control Scheme");
-        if (context.performed)
+        foreach(InputDevice device in playerInput.devices)
         {
-            if (currentControlScheme == "KeyboardMouse")
+            if(device is Keyboard|| device is Mouse)
             {
-                Debug.Log("KeyboardMouse connected");
-                if (Gamepad.current != null)
-                {
-                    Debug.Log("Gamepad connected");
-                    playerInputActions.Player.Disable();
-
-                    currentControlScheme = "Gamepad";
-
-                    playerInputActions.Player.Enable();
-                    Debug.Log("Switched to Gamepad");
-
-                }
-                else
-                {
-                    Debug.LogWarning("No Gamepad connected");
-                }
+                Debug.Log("Keyboard and Mouse");
             }
-            else
+            else if(device is Gamepad)
             {
-                Debug.Log("Gamepad connected");
-                if (Keyboard.current != null && Mouse.current != null)
-                {
-                    Debug.Log("Keyboard and Mouse connected");
-                    playerInputActions.Player.Disable();
-
-                    playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Mouse.current);
-                    currentControlScheme = "Keyboard&Mouse";
-
-                    playerInputActions.Player.Enable();
-                    Debug.Log("Switched to Keyboard&Mouse");
-                }
-                else
-                {
-                    Debug.LogWarning("No Keyboard or Mouse connected");
-                }
+                Debug.Log("Gamepad");
             }
         }
     }
     public void HandleAllInputs()
     {
+        //CheckInputType();
         //HandleSprintingInput();
         //HandleCameraInput();
         //HandlePauseKeyInput();
