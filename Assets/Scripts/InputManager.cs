@@ -136,7 +136,7 @@ public class InputManager : MonoBehaviour
     public void HandleAllInputs()
     {
         //CheckInputType();
-        //HandleSprintingInput();
+        HandleSprintingInput();
         //HandleCameraInput();
         //HandlePauseKeyInput();
     }
