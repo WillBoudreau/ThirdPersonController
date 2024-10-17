@@ -29,12 +29,13 @@ public class InputManager : MonoBehaviour
     private InputAction movement;
     private InputAction jump;
     private InputAction look;
+    private InputAction pause;
 
     [Header("Camera Inputs")]
     public float scrollInput; 
     public Vector2 cameraInput; 
 
-    public bool isPauseKeyPressed = false;
+    public bool isPauseKeyPressed;
 
     [Header("Control Scheme")]
     public Text textControlScheme1;
@@ -49,7 +50,6 @@ public class InputManager : MonoBehaviour
         }
         playerInputActions.Player.Move.performed += HandleMovementInput;
         playerInputActions.Player.Jump.performed += HandleJumpInput;
-        // playerInputActions.SwitchControlScheme.SwitchScheme.performed += HandleSwitchScheme;
         playerInputActions.Player.Look.performed += HandleCameraInput;
     }
     void OnEnable()
@@ -58,15 +58,16 @@ public class InputManager : MonoBehaviour
         movement = playerInputActions.Player.Move;
         jump = playerInputActions.Player.Jump;
         look = playerInputActions.Player.Look;
-       
+        pause = playerInputActions.Player.Pause;
+
         movement.Enable();
         jump.Enable();
         look.Enable();
+        pause.Enable();
 
         playerInputActions.Player.Move.canceled += HandleMovementInput;
         playerInputActions.Player.Jump.canceled += HandleJumpInput;
         playerInputActions.Player.Look.canceled += HandleCameraInput;
-
     }
 
     void OnDisable()
@@ -100,7 +101,7 @@ public class InputManager : MonoBehaviour
         //CheckInputType();
         HandleSprintingInput();
         //HandleCameraInput();
-        //HandlePauseKeyInput();
+        HandlePauseKeyInput();
     }
 
     private void HandleCameraInput(InputAction.CallbackContext context)
@@ -138,10 +139,10 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    // private void HandlePauseKeyInput()
-    // {
-    //     isPauseKeyPressed = Input.GetKeyDown(KeyCode.Escape); // Detect the escape key press
-    // }
+    private void HandlePauseKeyInput()
+    {
+        isPauseKeyPressed = Input.GetKeyDown(KeyCode.Escape); 
+    }
 
     private void HandleSprintingInput()
     {
