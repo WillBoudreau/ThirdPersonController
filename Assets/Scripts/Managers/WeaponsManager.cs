@@ -40,6 +40,7 @@ internal class WeaponsManager : MonoBehaviour
                 }
                 renderer.material.color = Color.red;
                 hitRenderers.Add(renderer);
+                Debug.Log($"Hit object: {hit2.collider.gameObject.name}");
             }
         }
 

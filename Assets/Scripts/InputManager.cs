@@ -85,13 +85,13 @@ public class InputManager : MonoBehaviour
         {
             if(device is Keyboard|| device is Mouse)
             {
-                Debug.Log("Keyboard and Mouse");
+                //Debug.Log("Keyboard and Mouse");
                 textControlScheme1.text = "Keyboard and Mouse";
 
             }
             else if(device is Gamepad)
             {
-                Debug.Log("Gamepad");
+                //Debug.Log("Gamepad");
                 textControlScheme2.text = "Gamepad";
             }
         }
