@@ -35,7 +35,6 @@ public class PlayerLocomotionHandler : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         HandleAllPlayerMovement();
     }
-
     public void HandleAllPlayerMovement()
     {
         playerIsGrounded = characterController.isGrounded; // Check if grounded
@@ -126,6 +125,5 @@ public class PlayerLocomotionHandler : MonoBehaviour
         // Calculate the player's velocity magnitude, including both movement and vertical velocity (gravity/jumping)
         playerVelocity = characterController.velocity.magnitude;
     }
-
 
 }
