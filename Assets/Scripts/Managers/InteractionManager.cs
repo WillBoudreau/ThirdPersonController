@@ -8,6 +8,7 @@ public class InteractionManager : MonoBehaviour
     public Camera playerCam;
     public int MaxRayDist;
     public UIManager uiManager;
+    public int CoinCount;
     [SerializeField]
     private GameObject target;
     private Interactable targetInteractable;
@@ -67,7 +68,8 @@ public class InteractionManager : MonoBehaviour
                 break;
             case Interactable.InteractableOBJ.Pickup:
                 target.SetActive(false);
-                Debug.Log("Sweet! you picked up a project extention");
+                CoinCount++;
+                Debug.Log($"Sweet! you picked up {CoinCount} project extention");
                 break;
         }
     }
