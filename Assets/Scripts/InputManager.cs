@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
     // Script References
     [SerializeField] private PlayerLocomotionHandler playerLocomotionHandler;
     [SerializeField] private CameraManager cameraManager; // Reference to CameraManager
+    public InteractionManager interactionManager;
 
     // Input action
     private PlayerInputActions playerInputActions;
@@ -30,6 +31,7 @@ public class InputManager : MonoBehaviour
     private InputAction jump;
     private InputAction look;
     private InputAction pause;
+    private InputAction playerFire;
 
     [Header("Camera Inputs")]
     public float scrollInput; 
@@ -55,15 +57,18 @@ public class InputManager : MonoBehaviour
     void OnEnable()
     {
         playerInputActions.Enable();
+        interactionManager = FindObjectOfType<InteractionManager>();
         movement = playerInputActions.Player.Move;
         jump = playerInputActions.Player.Jump;
         look = playerInputActions.Player.Look;
         pause = playerInputActions.Player.Pause;
+        playerFire = playerInputActions.Player.Fire;
 
         movement.Enable();
         jump.Enable();
         look.Enable();
         pause.Enable();
+        playerFire.Enable();
 
         playerInputActions.Player.Move.canceled += HandleMovementInput;
         playerInputActions.Player.Jump.canceled += HandleJumpInput;
@@ -78,6 +83,13 @@ public class InputManager : MonoBehaviour
     {
         playerLocomotionHandler.playerVelocity = moveAmount;
         CheckInputType();
+    }
+    void HandleInteractionType()
+    {
+        if(playerFire.IsPressed() && interactionManager.InteractionPossible)
+        {
+            interactionManager.Interact();
+        }
     }
     void CheckInputType()
     {
@@ -100,6 +112,7 @@ public class InputManager : MonoBehaviour
     {
         //CheckInputType();
         HandleSprintingInput();
+        HandleInteractionType();
         //HandleCameraInput();
         HandlePauseKeyInput();
     }

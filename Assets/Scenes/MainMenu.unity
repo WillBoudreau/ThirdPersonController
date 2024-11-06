@@ -796,6 +796,18 @@ LightingSettings:
   m_PVRTiledBaking: 0
   m_NumRaysToShootPerTexel: -1
   m_RespectSceneVisibilityWhenBakingGI: 0
+--- !u!114 &706494037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 393610008284620649, guid: e778663d324e19a48ab9d91fcd9af8f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2384008851326326069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74205c44aa72a3e48b7a0ae77d99b492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &738964577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 634344493146018761, guid: e778663d324e19a48ab9d91fcd9af8f9,
@@ -1709,6 +1721,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889756238}
   m_CullTransparentMesh: 1
+--- !u!1 &899895584 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1625125363580622106, guid: e778663d324e19a48ab9d91fcd9af8f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2384008851326326069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &899895586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899895584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2661df5a14ec554193ea8d714adbda8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraManager: {fileID: 2384008851326326070}
+  playerCam: {fileID: 253664136}
+  MaxRayDist: 10
+  uiManager: {fileID: 706494037}
+  target: {fileID: 0}
+  InteractionPossible: 0
 --- !u!4 &990692751 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2290988587711564338, guid: e778663d324e19a48ab9d91fcd9af8f9,
@@ -2033,8 +2069,6 @@ MonoBehaviour:
   ShowGizmos: 1
   arronwSize: 0.5
   arrowAmount: 1
-  IsPlayerOnPlatform: 0
-  gameManager: {fileID: 0}
 --- !u!65 &1229400489
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2506,6 +2540,11 @@ PrefabInstance:
       objectReference: {fileID: 744876565}
     - target: {fileID: 393610008284620649, guid: e778663d324e19a48ab9d91fcd9af8f9,
         type: 3}
+      propertyPath: GamePlayMessage
+      value: 
+      objectReference: {fileID: 247204122}
+    - target: {fileID: 393610008284620649, guid: e778663d324e19a48ab9d91fcd9af8f9,
+        type: 3}
       propertyPath: LoadingScreenUI
       value: 
       objectReference: {fileID: 744876565}
@@ -2626,6 +2665,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5697578372536420906, guid: e778663d324e19a48ab9d91fcd9af8f9,
         type: 3}
+      propertyPath: interactionManager
+      value: 
+      objectReference: {fileID: 899895586}
+    - target: {fileID: 5697578372536420906, guid: e778663d324e19a48ab9d91fcd9af8f9,
+        type: 3}
       propertyPath: textControlScheme1
       value: 
       objectReference: {fileID: 1690200394}
@@ -2692,6 +2736,10 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 247204121}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1625125363580622106, guid: e778663d324e19a48ab9d91fcd9af8f9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 899895586}
     - targetCorrespondingSourceObject: {fileID: 7034935583075056663, guid: e778663d324e19a48ab9d91fcd9af8f9,
         type: 3}
       insertIndex: 3
