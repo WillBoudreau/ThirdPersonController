@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class InteractionManager : MonoBehaviour
             case Interactable.InteractableOBJ.Pickup:
                 target.SetActive(false);
                 CoinCount++;
-                Debug.Log($"Sweet! you picked up {CoinCount} project extention");
+                Debug.Log($"Sweet! you picked up {CoinCount} Coins");
                 break;
         }
     }
