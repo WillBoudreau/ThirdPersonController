@@ -89,6 +89,7 @@ public class InputManager : MonoBehaviour
         if(playerFire.IsPressed() && interactionManager.InteractionPossible)
         {
             interactionManager.Interact();
+            Debug.Log("Interact");
         }
     }
     void CheckInputType()

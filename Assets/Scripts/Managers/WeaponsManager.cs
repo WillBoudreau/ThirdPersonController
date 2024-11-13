@@ -21,7 +21,7 @@ internal class WeaponsManager : MonoBehaviour
         if (Physics.Raycast(playercam.transform.position, playercam.transform.forward, out RaycastHit hit, 20, Ground.value))
         {
             dist = hit.distance;
-            Debug.Log($"Distance is {dist}");
+            Debug.LogWarning($"Distance is {dist}");
         }
 
         Vector3 CamPos = playercam.transform.position;

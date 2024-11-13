@@ -1743,7 +1743,9 @@ MonoBehaviour:
   playerCam: {fileID: 253664136}
   MaxRayDist: 10
   uiManager: {fileID: 706494037}
+  CoinCount: 0
   target: {fileID: 0}
+  targetInteractable: {fileID: 11400000, guid: 4e4ac99ac6c6b624595b72f8a3751362, type: 2}
   InteractionPossible: 0
 --- !u!4 &990692751 stripped
 Transform:
@@ -2573,6 +2575,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: TestLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 515732063566655833, guid: e778663d324e19a48ab9d91fcd9af8f9,
+        type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: e38de9731fda26b44938d76be603d52a,
+        type: 2}
     - target: {fileID: 616959208050697347, guid: e778663d324e19a48ab9d91fcd9af8f9,
         type: 3}
       propertyPath: m_IsActive

@@ -61,16 +61,14 @@ public class InteractionManager : MonoBehaviour
         switch(targetInteractable.type)
         {
             case Interactable.InteractableOBJ.Door:
-                target.SetActive(false);
+                targetInteractable.Acitivate();
                 break;
             case Interactable.InteractableOBJ.Button:
-                target.SetActive(false);
-                Debug.Log("Yippeee! You pressed the button");
+                targetInteractable.Acitivate();
                 break;
             case Interactable.InteractableOBJ.Pickup:
-                target.SetActive(false);
                 CoinCount++;
-                Debug.Log($"Sweet! you picked up {CoinCount} Coins");
+                targetInteractable.Acitivate();
                 break;
         }
     }
