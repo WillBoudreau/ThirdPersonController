@@ -13,6 +13,7 @@ public class Language
     public string quit;
     public string options;
     public string credits;
+    public string OptionsPrompt;
 }
 
 public class LanguageData
@@ -31,6 +32,7 @@ public class Reader : MonoBehaviour
     public Text quitText;
     public Text optionsText;
     public Text creditsText;
+    public Text OptionsPrompt;
 
     public void Start()
     {
@@ -48,8 +50,17 @@ public class Reader : MonoBehaviour
                 quitText.text = language.quit;
                 optionsText.text = language.options;
                 creditsText.text = language.credits;
+                OptionsPrompt.text = language.OptionsPrompt;
                 return;
             }
         }
     }
+    public void SetEnglish()
+    {
+        SetLanguage("en");
+    }
+    public void SetFrench()
+    {
+        SetLanguage("fr");
+    }   
 }

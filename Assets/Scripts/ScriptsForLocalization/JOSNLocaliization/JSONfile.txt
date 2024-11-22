@@ -14,7 +14,8 @@
 
             "options": "Options",
 
-            "credits": "Credits"
+            "credits": "Credits",
+	    "OptionsPrompt": "Options to adjust Language"
 
         },
 
@@ -30,7 +31,9 @@
 
             "options": "Options",
 
-            "credits": "Crédits"
+            "credits": "Crédits",
+
+	    "OptionsPrompt" : "Options d’ajustement des langues"
 
         }
 
