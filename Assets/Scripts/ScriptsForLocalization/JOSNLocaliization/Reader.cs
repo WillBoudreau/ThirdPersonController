@@ -14,6 +14,8 @@ public class Language
     public string options;
     public string credits;
     public string OptionsPrompt;
+    public string OptionsEnglish;
+    public string OptionsFrench;
 }
 
 public class LanguageData
@@ -33,6 +35,8 @@ public class Reader : MonoBehaviour
     public Text optionsText;
     public Text creditsText;
     public Text OptionsPrompt;
+    public Text OptionsEnglish;
+    public Text OptionsFrench;
 
     public void Start()
     {
@@ -51,6 +55,8 @@ public class Reader : MonoBehaviour
                 optionsText.text = language.options;
                 creditsText.text = language.credits;
                 OptionsPrompt.text = language.OptionsPrompt;
+                OptionsEnglish.text = language.OptionsEnglish;
+                OptionsFrench.text = language.OptionsFrench;
                 return;
             }
         }

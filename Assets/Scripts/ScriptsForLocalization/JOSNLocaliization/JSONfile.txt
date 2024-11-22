@@ -15,7 +15,9 @@
             "options": "Options",
 
             "credits": "Credits",
-	    "OptionsPrompt": "Options to adjust Language"
+	    "OptionsPrompt": "Options to adjust Language",
+	    "OptionsEnglish" : "English",
+	    "OptionsFrench" : "French"
 
         },
 
@@ -33,7 +35,10 @@
 
             "credits": "Crédits",
 
-	    "OptionsPrompt" : "Options d’ajustement des langues"
+	    "OptionsPrompt" : "Options d’ajustement des langues",
+	    "OptionsEnglish" : "Anglais",
+	    "OptionsFrench" : "Francais"
+	
 
         }
 
